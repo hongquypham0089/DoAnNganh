@@ -1,0 +1,393 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="css/dieukhoan.css">
+    <main class="main-container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <div class="title-content">
+                <span>📜</span>
+                <h1>Điều khoản và Chính sách</h1>
+            </div>
+            <div class="last-updated">
+                Cập nhật lần cuối: <strong>01/03/2026</strong> | Có hiệu lực từ: <strong>15/03/2026</strong>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="policy-layout">
+            <!-- Sidebar -->
+            <div class="policy-sidebar">
+                <div class="sidebar-header">
+                    <h3>
+                        <span>📋</span> Mục lục
+                    </h3>
+                </div>
+                <ul class="policy-index">
+                    <li><a href="#dieu-khoan-su-dung" class="active" onclick="scrollToSection('dieu-khoan-su-dung', this)">1. Điều khoản sử dụng</a></li>
+                    <li><a href="#chinh-sach-bao-mat" class="sub-item" onclick="scrollToSection('chinh-sach-bao-mat', this)">1.1 Chính sách bảo mật</a></li>
+                    <li><a href="#quy-dinh-cham-cong" class="sub-item" onclick="scrollToSection('quy-dinh-cham-cong', this)">1.2 Quy định chấm công</a></li>
+                    <li><a href="#chinh-sach-luong" class="sub-item" onclick="scrollToSection('chinh-sach-luong', this)">1.3 Chính sách lương</a></li>
+                    <li><a href="#quyen-loi-nhan-vien" class="sub-item" onclick="scrollToSection('quyen-loi-nhan-vien', this)">1.4 Quyền lợi nhân viên</a></li>
+                    
+                    <li><a href="#chinh-sach-dao-tao" onclick="scrollToSection('chinh-sach-dao-tao', this)">2. Chính sách đào tạo</a></li>
+                    <li><a href="#chinh-sach-khen-thuong" class="sub-item" onclick="scrollToSection('chinh-sach-khen-thuong', this)">2.1 Khen thưởng</a></li>
+                    <li><a href="#chinh-sach-ky-luat" class="sub-item" onclick="scrollToSection('chinh-sach-ky-luat', this)">2.2 Kỷ luật</a></li>
+                    
+                    <li><a href="#quy-dinh-khac" onclick="scrollToSection('quy-dinh-khac', this)">3. Quy định khác</a></li>
+                    <li><a href="#quy-trinh-xu-ly-khieu-nai" class="sub-item" onclick="scrollToSection('quy-trinh-xu-ly-khieu-nai', this)">3.1 Quy trình xử lý khiếu nại</a></li>
+                    <li><a href="#quy-dinh-an-toan" class="sub-item" onclick="scrollToSection('quy-dinh-an-toan', this)">3.2 Quy định an toàn lao động</a></li>
+                </ul>
+
+                <div class="quick-summary">
+                    <h4>
+                        <span>⚡</span> Tóm tắt nhanh
+                    </h4>
+                    <div class="summary-item">
+                        <span>📌</span> 8h-17h30 (T2-T6)
+                    </div>
+                    <div class="summary-item">
+                        <span>📌</span> Nghỉ trưa 12h-13h30
+                    </div>
+                    <div class="summary-item">
+                        <span>📌</span> Check-in trước 8h
+                    </div>
+                    <div class="summary-item">
+                        <span>📌</span> 12 ngày phép/năm
+                    </div>
+                    <div class="summary-item">
+                        <span>📌</span> BHXH 8% lương CB
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="policy-content">
+                <!-- Section 1: Điều khoản sử dụng -->
+                <section id="dieu-khoan-su-dung" class="policy-section">
+                    <div class="section-header">
+                        <div class="section-icon">📋</div>
+                        <h2>1. Điều khoản sử dụng <span>Áp dụng cho toàn bộ nhân viên</span></h2>
+                    </div>
+                    
+                    <div class="section-intro">
+                        Các điều khoản này quy định quyền và nghĩa vụ của nhân viên khi sử dụng hệ thống chấm công thông minh và tham gia vào hoạt động của công ty.
+                    </div>
+
+                    <!-- Article 1.1 -->
+                    <div class="article-card" id="chinh-sach-bao-mat">
+                        <div class="article-title" onclick="toggleArticle(this)">
+                            <span class="toggle-icon">▼</span>
+                            <h3>1.1. Chính sách bảo mật thông tin</h3>
+                        </div>
+                        <div class="article-content">
+                            <p><strong>1.1.1. Thu thập thông tin:</strong> Hệ thống thu thập các thông tin sau:</p>
+                            <ul>
+                                <li>Thông tin cá nhân: Họ tên, ngày sinh, CCCD, địa chỉ</li>
+                                <li>Dữ liệu sinh trắc: Ảnh khuôn mặt phục vụ chấm công</li>
+                                <li>Thông tin chấm công: Thời gian check-in/out, vị trí GPS</li>
+                                <li>Thông tin lương: Bảng lương, tài khoản ngân hàng</li>
+                            </ul>
+
+                            <p><strong>1.1.2. Mục đích sử dụng:</strong></p>
+                            <ul>
+                                <li>Xác thực danh tính khi chấm công</li>
+                                <li>Tính lương và phúc lợi</li>
+                                <li>Quản lý nhân sự</li>
+                                <li>Báo cáo thống kê</li>
+                            </ul>
+
+                            <div class="highlight-box">
+                                <p><strong>🔒 Cam kết bảo mật:</strong></p>
+                                <p>• Dữ liệu khuôn mặt được mã hóa AES-256</p>
+                                <p>• Không chia sẻ cho bên thứ ba khi chưa có đồng ý</p>
+                                <p>• Nhân viên có quyền yêu cầu xóa dữ liệu khi nghỉ việc</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 1.2 -->
+                    <div class="article-card" id="quy-dinh-cham-cong">
+                        <div class="article-title" onclick="toggleArticle(this)">
+                            <span class="toggle-icon">▼</span>
+                            <h3>1.2. Quy định chấm công</h3>
+                        </div>
+                        <div class="article-content">
+                            <div class="table-wrapper">
+                                <table class="policy-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Loại</th>
+                                            <th>Quy định</th>
+                                            <th>Xử lý vi phạm</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Giờ làm việc</strong></td>
+                                            <td>8h00 - 17h30 (T2 - T6)<br>Nghỉ trưa: 12h00 - 13h30</td>
+                                            <td>Đi trễ quá 15' trừ 1h công</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Check-in/out</strong></td>
+                                            <td>Check-in trước 8h, check-out sau 17h30<br>Bằng nhận diện khuôn mặt + GPS</td>
+                                            <td>Quên check-in/out: không tính công</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tăng ca</strong></td>
+                                            <td>Tối đa 4h/ngày, 40h/tháng<br>Được duyệt trước bởi quản lý</td>
+                                            <td>150% lương giờ (ngày thường)<br>200% (cuối tuần)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="note-box">
+                                <div class="note-icon">📸</div>
+                                <div class="note-content">
+                                    <h4>Lưu ý khi chấm công bằng khuôn mặt:</h4>
+                                    <p>• Đảm bảo đủ ánh sáng</p>
+                                    <p>• Không đeo khẩu trang, kính râm</p>
+                                    <p>• Nhìn thẳng vào camera trong 3 giây</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 1.3 -->
+                    <div class="article-card" id="chinh-sach-luong">
+                        <div class="article-title" onclick="toggleArticle(this)">
+                            <span class="toggle-icon">▼</span>
+                            <h3>1.3. Chính sách lương thưởng</h3>
+                        </div>
+                        <div class="article-content">
+                            <p><strong>1.3.1. Cấu trúc lương:</strong></p>
+                            <ul>
+                                <li>Lương cơ bản: Theo thỏa thuận hợp đồng</li>
+                                <li>Phụ cấp: Ăn trưa, xăng xe, điện thoại (tùy vị trí)</li>
+                                <li>Thưởng: KPI, chuyên cần, lễ Tết</li>
+                                <li>Tăng ca: Tính theo giờ thực tế</li>
+                            </ul>
+
+                            <p><strong>1.3.2. Kỳ lương và hình thức thanh toán:</strong></p>
+                            <ul>
+                                <li>Kỳ lương: Từ ngày 25 tháng trước đến 24 tháng sau</li>
+                                <li>Ngày trả lương: 05 hàng tháng</li>
+                                <li>Hình thức: Chuyển khoản ngân hàng</li>
+                                <li>Bảng lương điện tử: Có trên hệ thống</li>
+                            </ul>
+
+                            <p><strong>1.3.3. Các khoản khấu trừ:</strong></p>
+                            <ul>
+                                <li>Bảo hiểm xã hội: 8% lương cơ bản</li>
+                                <li>Bảo hiểm y tế: 1.5%</li>
+                                <li>Bảo hiểm thất nghiệp: 1%</li>
+                                <li>Thuế TNCN: Theo luật định</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Article 1.4 -->
+                    <div class="article-card" id="quyen-loi-nhan-vien">
+                        <div class="article-title" onclick="toggleArticle(this)">
+                            <span class="toggle-icon">▼</span>
+                            <h3>1.4. Quyền lợi nhân viên</h3>
+                        </div>
+                        <div class="article-content">
+                            <p><strong>1.4.1. Nghỉ phép năm:</strong> 12 ngày/năm (tăng 1 ngày sau 5 năm)</p>
+                            <p><strong>1.4.2. Nghỉ lễ:</strong> 11 ngày/năm theo quy định nhà nước</p>
+                            <p><strong>1.4.3. Bảo hiểm:</strong> Đóng BHXH, BHYT, BHTN đầy đủ</p>
+                            <p><strong>1.4.4. Đào tạo:</strong> Hỗ trợ 100% chi phí đào tạo nội bộ</p>
+                            <p><strong>1.4.5. Khám sức khỏe:</strong> 1 lần/năm</p>
+                            <p><strong>1.4.6. Du lịch:</strong> 1 lần/năm (hỗ trợ 2-5 triệu)</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Chính sách đào tạo -->
+                <section id="chinh-sach-dao-tao" class="policy-section">
+                    <div class="section-header">
+                        <div class="section-icon">📚</div>
+                        <h2>2. Chính sách đào tạo <span>Phát triển nhân viên</span></h2>
+                    </div>
+
+                    <!-- Article 2.1 -->
+                    <div class="article-card" id="chinh-sach-khen-thuong">
+                        <div class="article-title" onclick="toggleArticle(this)">
+                            <span class="toggle-icon">▼</span>
+                            <h3>2.1. Chính sách khen thưởng đào tạo</h3>
+                        </div>
+                        <div class="article-content">
+                            <ul>
+                                <li>Hoàn thành khóa học nội bộ: Thưởng 500.000đ</li>
+                                <li>Đạt chứng chỉ chuyên môn: Thưởng 1-3 triệu</li>
+                                <li>Nhân viên xuất sắc: Thưởng 2-5 triệu/quý</li>
+                                <li>Sáng kiến cải tiến: Thưởng 1-10 triệu</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Article 2.2 -->
+                    <div class="article-card" id="chinh-sach-ky-luat">
+                        <div class="article-title" onclick="toggleArticle(this)">
+                            <span class="toggle-icon">▼</span>
+                            <h3>2.2. Chính sách kỷ luật</h3>
+                        </div>
+                        <div class="article-content">
+                            <div class="table-wrapper">
+                                <table class="policy-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Vi phạm</th>
+                                            <th>Mức 1</th>
+                                            <th>Mức 2</th>
+                                            <th>Mức 3</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Đi trễ</td>
+                                            <td>Nhắc nhở</td>
+                                            <td>Khiển trách</td>
+                                            <td>Trừ lương</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Không check-in/out</td>
+                                            <td>Cảnh báo</td>
+                                            <td>Trừ 1 công</td>
+                                            <td>Trừ 3 công</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vi phạm quy trình</td>
+                                            <td>Nhắc nhở</td>
+                                            <td>Khiển trách</td>
+                                            <td>Đình chỉ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Quy định khác -->
+                <section id="quy-dinh-khac" class="policy-section">
+                    <div class="section-header">
+                        <div class="section-icon">⚖️</div>
+                        <h2>3. Quy định khác</h2>
+                    </div>
+
+                    <!-- Article 3.1 -->
+                    <div class="article-card" id="quy-trinh-xu-ly-khieu-nai">
+                        <div class="article-title" onclick="toggleArticle(this)">
+                            <span class="toggle-icon">▼</span>
+                            <h3>3.1. Quy trình xử lý khiếu nại</h3>
+                        </div>
+                        <div class="article-content">
+                            <ol>
+                                <li><strong>Bước 1:</strong> Gửi khiếu nại đến quản lý trực tiếp (trong 7 ngày)</li>
+                                <li><strong>Bước 2:</strong> Quản lý phản hồi trong 3 ngày làm việc</li>
+                                <li><strong>Bước 3:</strong> Nếu không đồng ý, chuyển lên HR (7 ngày)</li>
+                                <li><strong>Bước 4:</strong> HR tổ chức họp giải quyết</li>
+                                <li><strong>Bước 5:</strong> Quyết định cuối cùng từ Ban giám đốc</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Article 3.2 -->
+                    <div class="article-card" id="quy-dinh-an-toan">
+                        <div class="article-title" onclick="toggleArticle(this)">
+                            <span class="toggle-icon">▼</span>
+                            <h3>3.2. Quy định an toàn lao động</h3>
+                        </div>
+                        <div class="article-content">
+                            <ul>
+                                <li>Trang bị đầy đủ đồ bảo hộ khi làm việc</li>
+                                <li>Báo cáo ngay tai nạn lao động</li>
+                                <li>Tuân thủ quy trình PCCC</li>
+                                <li>Không sử dụng chất kích thích trong giờ làm</li>
+                            </ul>
+                            
+                            <div class="highlight-box">
+                                <p><strong>🚨 Trường hợp khẩn cấp:</strong></p>
+                                <p>• Cấp cứu: 115</p>
+                                <p>• PCCC: 114</p>
+                                <p>• An ninh nội bộ: 113 (máy nhánh)</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Version History -->
+                <div class="version-history">
+                    <h3>
+                        <span>📅</span> Lịch sử phiên bản
+                    </h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">15/03/2026</div>
+                            <div class="timeline-content">
+                                <h4>Phiên bản 3.0 - Hiện tại</h4>
+                                <p>Cập nhật chính sách chấm công bằng khuôn mặt, bổ sung quy định tăng ca mới</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">01/01/2026</div>
+                            <div class="timeline-content">
+                                <h4>Phiên bản 2.5</h4>
+                                <p>Điều chỉnh mức lương tối thiểu, cập nhật phụ cấp</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">15/08/2025</div>
+                            <div class="timeline-content">
+                                <h4>Phiên bản 2.0</h4>
+                                <p>Áp dụng hệ thống chấm công thông minh, bổ sung chính sách đào tạo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <h3 style="color: #8e44ad; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <span>❓</span> Câu hỏi thường gặp
+                    </h3>
+                    
+                    <div class="faq-item" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <span>Làm thế nào để xin nghỉ phép?</span>
+                            <span>▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            Vào trang chủ, chọn "Xin nghỉ phép", điền form và gửi cho quản lý. Quản lý sẽ phê duyệt trong 24h.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <span>Tôi quên check-out thì xử lý thế nào?</span>
+                            <span>▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            Báo ngay cho quản lý trong vòng 24h. Quản lý sẽ xác nhận giờ kết thúc và cập nhật trên hệ thống.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFAQ(this)">
+                        <div class="faq-question">
+                            <span>Khi nào được tăng lương?</span>
+                            <span>▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            Xét tăng lương định kỳ 1 năm/lần (tháng 12) dựa trên kết quả đánh giá KPI.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Print Button -->
+        <button class="print-policy" onclick="printPolicy()" title="In điều khoản">🖨️</button>
+    </main>
+
+    <script src="js/dieukhoan.js"></script>   
+<%- include('partials/footer') %>

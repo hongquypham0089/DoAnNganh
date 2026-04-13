@@ -1,0 +1,39 @@
+<footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Giới thiệu</a>
+                <a href="#">Liên hệ</a>
+                <a href="#">Tuyển dụng</a>
+                <a href="#">Bảo mật</a>
+            </div>
+            <div class="copyright">
+                © 2026 Công ty TNHH Giải pháp Công nghệ Thông minh. Hệ thống chấm công thông minh.
+            </div>
+            <div class="company-info">
+                Địa chỉ: Tầng 5, Tòa nhà Tech, 123 Đường ABC, Quận 1, TP.HCM | Hotline: 1900 6868
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Xử lý đăng xuất
+        function handleLogout() {
+            if(confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+                // Thay vì về thẳng '/', ta gọi lên Backend để nó 'xé vé' session đi
+                window.location.href = '/logout'; 
+            }
+        }
+
+        // Script làm nổi bật menu hiện tại dựa trên đường dẫn URL
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                if(item.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

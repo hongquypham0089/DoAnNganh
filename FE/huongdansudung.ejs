@@ -1,0 +1,447 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="css/huongdansudung.css">
+
+    <main class="main-container">
+        <!-- Page Title with Search -->
+        <div class="page-title">
+            <div class="title-left">
+                <span>❓</span>
+                <h1>Hướng dẫn sử dụng</h1>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Tìm kiếm hướng dẫn...">
+                <button onclick="searchGuide()">🔍</button>
+            </div>
+        </div>
+
+        <!-- Guide Categories -->
+        <div class="categories-section">
+            <div class="categories-grid">
+                <div class="category-card active" onclick="switchGuide('cham-cong', this)">
+                    <div class="category-icon">📸</div>
+                    <h3>Chấm công</h3>
+                    <p>Hướng dẫn check-in/out</p>
+                </div>
+                <div class="category-card" onclick="switchGuide('luong', this)">
+                    <div class="category-icon">💰</div>
+                    <h3>Lương & Thu nhập</h3>
+                    <p>Xem lương, bảng lương</p>
+                </div>
+                <div class="category-card" onclick="switchGuide('nghi-phep', this)">
+                    <div class="category-icon">📝</div>
+                    <h3>Nghỉ phép</h3>
+                    <p>Xin nghỉ, theo dõi ngày phép</p>
+                </div>
+                <div class="category-card" onclick="switchGuide('thong-tin', this)">
+                    <div class="category-icon">👤</div>
+                    <h3>Thông tin cá nhân</h3>
+                    <p>Cập nhật hồ sơ</p>
+                </div>
+                <div class="category-card" onclick="switchGuide('khac', this)">
+                    <div class="category-icon">⚙️</div>
+                    <h3>Hướng dẫn khác</h3>
+                    <p>Các tính năng bổ sung</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Guide Layout -->
+        <div class="guide-layout">
+
+            <!-- Main Content -->
+            <div class="guide-content">
+                <!-- Chấm công Guide -->
+                <div id="guide-cham-cong" class="guide-section active">
+                    <h2>📸 Hướng dẫn chấm công</h2>
+                    <div class="section-desc">Các bước thực hiện chấm công bằng nhận diện khuôn mặt</div>
+
+                    <div class="step-guide">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Đăng nhập vào hệ thống</h3>
+                                <p>Truy cập vào trang chủ và đăng nhập bằng tài khoản đã được cấp. Nếu quên mật khẩu, sử dụng chức năng "Quên mật khẩu" để đặt lại.</p>
+                                <div class="step-note">
+                                    💡 Lưu ý: Tài khoản được cấp bởi phòng nhân sự khi bắt đầu làm việc.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Vào trang Chấm công</h3>
+                                <p>Click vào mục "📸 Chấm công" trên thanh navigation để mở giao diện chấm công.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Kiểm tra camera</h3>
+                                <p>Đảm bảo camera đang hoạt động. Khung hình sẽ hiển thị hình ảnh từ camera của bạn. Nếu camera không hoạt động, click "Kiểm tra" để kiểm tra kết nối.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Thực hiện check-in</h3>
+                                <p>Đặt khuôn mặt vào khung hình, nhìn thẳng vào camera. Click nút "CHECK-IN" màu xanh. Hệ thống sẽ tự động nhận diện và xác thực khuôn mặt.</p>
+                                <div class="step-note">
+                                    ⏰ Thời gian check-in chuẩn: 7h45 - 8h15
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Xác nhận kết quả</h3>
+                                <p>Sau khi check-in thành công, màn hình sẽ hiển thị thông báo kèm thời gian check-in. Kiểm tra lại thông tin trên bảng tổng kết.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <h3>Check-out cuối ngày</h3>
+                                <p>Thực hiện tương tự các bước trên, click nút "CHECK-OUT" màu đỏ. Hệ thống sẽ tính toán tổng giờ làm và hiển thị thông báo.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-tutorials">
+                        <h3>
+                            <span>🎥</span> Video hướng dẫn
+                        </h3>
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <div class="video-container">
+                                    <video controls width="100%" poster="img/thumbnail-checkin.jpg">
+                                        <source src="uploads/videos/Download.mp4" type="video/mp4">
+                                        Trình duyệt của bạn không hỗ trợ xem video.
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h4>Cách check-in bằng khuôn mặt</h4>
+                                    <p>Hướng dẫn chi tiết từng bước thực hiện trên hệ thống</p>
+                                </div>
+                            </div>
+
+                            <div class="video-card">
+                                <div class="video-container">
+                                    <video controls width="100%" poster="img/thumbnail-checkout.jpg">
+                                        <source src="uploads/videos/quanghung.mp4" type="video/mp4">
+                                        Trình duyệt của bạn không hỗ trợ xem video.
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h4>Xử lý khi quên check-out</h4>
+                                    <p>Cách báo cáo và khắc phục khi gặp sự cố</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-section">
+                        <h3>
+                            <span>❓</span> Câu hỏi thường gặp
+                        </h3>
+                        
+                        <div class="faq-item" onclick="toggleFAQ(this)">
+                            <div class="faq-question">
+                                <span>Làm gì nếu camera không nhận diện được khuôn mặt?</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Kiểm tra ánh sáng, đảm bảo không đeo khẩu trang/kính râm. Nếu vẫn không được, báo IT để kiểm tra camera.
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" onclick="toggleFAQ(this)">
+                            <div class="faq-question">
+                                <span>Tôi quên check-out thì phải làm sao?</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Báo ngay cho quản lý trong vòng 24h. Quản lý sẽ xác nhận giờ kết thúc và cập nhật trên hệ thống.
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" onclick="toggleFAQ(this)">
+                            <div class="faq-question">
+                                <span>Check-in từ xa có được không?</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Không. Hệ thống yêu cầu GPS xác nhận vị trí tại công ty. Nếu làm việc từ xa, cần có phê duyệt đặc biệt.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lương Guide -->
+                <div id="guide-luong" class="guide-section">
+                    <h2>💰 Hướng dẫn xem lương và thu nhập</h2>
+                    <div class="section-desc">Cách tra cứu bảng lương và các khoản thu nhập</div>
+
+                    <div class="step-guide">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Truy cập trang Thu nhập</h3>
+                                <p>Trên thanh navigation, chọn mục "💰 Thu nhập" để xem thông tin lương của bạn.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Chọn tháng muốn xem</h3>
+                                <p>Sử dụng bộ chọn tháng ở góc phải để chuyển đổi giữa các tháng. Dữ liệu sẽ tự động cập nhật.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Xem tổng quan thu nhập</h3>
+                                <p>Các thẻ thống kê hiển thị tổng thu nhập, tổng giờ công, ngày công và thực nhận của tháng.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Xem chi tiết các khoản</h3>
+                                <p>Phần "Chi tiết thu nhập" liệt kê tất cả các khoản: lương cơ bản, phụ cấp, thưởng, tăng ca và các khoản khấu trừ.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Xem lịch sử thu nhập</h3>
+                                <p>Kéo xuống phần "Lịch sử thu nhập" để xem bảng lương các tháng trước. Có thể lọc theo 6 tháng, 12 tháng hoặc tất cả.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-note" style="margin: 20px 0;">
+                        <strong>📌 Lưu ý:</strong> Bảng lương được cập nhật vào ngày 05 hàng tháng. Nếu có sai sót, vui lòng liên hệ phòng nhân sự trong vòng 7 ngày.
+                    </div>
+
+                    <div class="faq-section">
+                        <h3>❓ Câu hỏi thường gặp</h3>
+                        
+                        <div class="faq-item" onclick="toggleFAQ(this)">
+                            <div class="faq-question">
+                                <span>Tại sao lương thực nhận thấp hơn tổng thu nhập?</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Do đã khấu trừ các khoản bảo hiểm (BHXH 8%, BHYT 1.5%, BHTN 1%) và tạm ứng (nếu có).
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item" onclick="toggleFAQ(this)">
+                            <div class="faq-question">
+                                <span>Làm thế nào để tải bảng lương?</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Ở phần "Bảng lương chi tiết", click vào tháng muốn tải và chọn "Tải xuống" hoặc icon 📥.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nghỉ phép Guide -->
+                <div id="guide-nghi-phep" class="guide-section">
+                    <h2>📝 Hướng dẫn xin nghỉ phép</h2>
+                    <div class="section-desc">Quy trình xin nghỉ phép và theo dõi ngày phép còn lại</div>
+
+                    <div class="step-guide">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Vào trang chủ</h3>
+                                <p>Từ trang chủ, click vào nút "Xin nghỉ phép" trong phần thao tác nhanh.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Điền form đăng ký</h3>
+                                <p>Chọn ngày bắt đầu, ngày kết thúc, loại nghỉ phép (nghỉ năm, nghỉ không lương, nghỉ ốm...) và lý do.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Đính kèm giấy tờ (nếu cần)</h3>
+                                <p>Nếu nghỉ ốm, cần đính kèm ảnh giấy khám bệnh. Nếu nghỉ việc riêng, có thể upload giấy tờ liên quan.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Gửi đơn cho quản lý</h3>
+                                <p>Click "Gửi đơn" để gửi yêu cầu cho quản lý trực tiếp. Hệ thống sẽ thông báo khi quản lý phê duyệt.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Theo dõi trạng thái</h3>
+                                <p>Vào mục "Đơn từ của tôi" để theo dõi trạng thái đơn: Đang chờ, Đã duyệt, Từ chối.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box" style="background: #f3e6ff; padding: 20px; border-radius: 15px; margin-top: 20px;">
+                    </div>
+                </div>
+
+                <!-- Thông tin cá nhân Guide -->
+                <div id="guide-thong-tin" class="guide-section">
+                    <h2>👤 Hướng dẫn cập nhật thông tin cá nhân</h2>
+                    <div class="section-desc">Cách cập nhật và quản lý hồ sơ cá nhân</div>
+
+                    <div class="step-guide">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Truy cập trang Thông tin cá nhân</h3>
+                                <p>Click vào mục "👤 Thông tin cá nhân" trên thanh navigation.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Cập nhật ảnh đại diện</h3>
+                                <p>Click vào ảnh đại diện hoặc nút "Cập nhật ảnh" để tải ảnh mới. Ảnh nên rõ mặt, kích thước tối đa 5MB.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Cập nhật thông tin cơ bản</h3>
+                                <p>Chỉnh sửa các thông tin như địa chỉ, số điện thoại, email... Nhấn "Lưu" để cập nhật.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Cập nhật thông tin ngân hàng</h3>
+                                <p>Kiểm tra và cập nhật số tài khoản nhận lương. Đảm bảo thông tin chính xác để nhận lương.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Đổi mật khẩu</h3>
+                                <p>Để đảm bảo an toàn, nên đổi mật khẩu định kỳ. Mật khẩu cần có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hướng dẫn khác -->
+                <div id="guide-khac" class="guide-section">
+                    <h2>⚙️ Các hướng dẫn khác</h2>
+                    <div class="section-desc">Các tính năng bổ sung và hỗ trợ</div>
+
+                    <div class="step-guide">
+                        <div class="step-item">
+                            <div class="step-number">📱</div>
+                            <div class="step-content">
+                                <h3>Sử dụng trên điện thoại</h3>
+                                <p>Truy cập website qua trình duyệt trên điện thoại. Giao diện tự động điều chỉnh phù hợp với màn hình nhỏ.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">🔔</div>
+                            <div class="step-content">
+                                <h3>Nhận thông báo</h3>
+                                <p>Bật thông báo để nhận các cập nhật về chấm công, lương, thông báo từ công ty. Vào phần Cài đặt để bật/tắt.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">📊</div>
+                            <div class="step-content">
+                                <h3>Xem báo cáo cá nhân</h3>
+                                <p>Trong trang chủ, xem các thống kê về chấm công, task, hiệu suất làm việc của bạn.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Support -->
+        <div class="contact-support">
+            <h3>
+                <span>📞</span> Cần hỗ trợ thêm?
+            </h3>
+            <div class="support-grid">
+                <div class="support-card" onclick="callSupport()">
+                    <div class="support-icon">📞</div>
+                    <h4>Hotline</h4>
+                    <p>0379997387</p>
+                    <small>24/7 hỗ trợ khẩn cấp</small>
+                </div>
+                <!-- <div class="support-card" onclick="chatSupport()">
+                    <div class="support-icon">💬</div>
+                    <h4>Chat trực tuyến</h4>
+                    <p>IT Support</p>
+                    <small>8h - 22h hàng ngày</small>
+                </div> -->
+                <div class="support-card" onclick="emailSupport()">
+                    <div class="support-icon">📧</div>
+                    <h4>Email</h4>
+                    <p>22050089@student.bdu.edu.vn</p>
+                    <small>Phản hồi trong 24h</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Tips -->
+        <div class="tips-section">
+            <h3>
+                <span>💡</span> Mẹo nhanh
+            </h3>
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <div class="tip-icon">📸</div>
+                    <p>Chụp ảnh đủ sáng để nhận diện nhanh</p>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">⏰</div>
+                    <p>Check-in trước 8h để tránh đi trễ</p>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">📋</div>
+                    <p>Xin nghỉ phép trước 3 ngày</p>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">💳</div>
+                    <p>Kiểm tra tài khoản ngân hàng trước ngày 05</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/huongdansudung.js"></script>
+<%- include('partials/footer') %>

@@ -1,0 +1,429 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="css/Home_chamcong.css">
+    <main class="main-container">
+        <!-- Trang chủ -->
+        <div id="home-page" class="page-content active">
+            <div class="home-layout">
+                <div class="feed-section">
+                    <h2 style="color: #8e44ad; margin-bottom: 20px;">📋 Tổng quan nhanh</h2>
+                     
+                    <div class="stats-overview">
+                        <div class="stat-card">
+                            <div class="stat-label">Giờ công tháng <span id="currentMonthLabel">...</span></div>
+                            <div class="stat-number" id="monthTotalHours" style="color:#8e44ad; font-weight:bold;">Đang tải...</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Ngày công</div>
+                            <div class="stat-number" id="monthTotalDays" style="color:#8e44ad; font-weight:bold;">Đang tải...</div>
+                        </div>
+                        <!-- <div class="stat-card">
+                            <div class="stat-label">Thu nhập tạm tính</div>
+                            <div class="stat-number">...</div>
+                        </div> -->
+                    </div>
+
+                    <div class="schedule-section">
+                        <div class="schedule-header">
+                            <h2>📅 Công việc của tôi</h2>
+                            <br>
+                            <span style="color: #8e44ad;"><%= new Date().toLocaleDateString('vi-VN') %></span>
+                        </div>
+                        
+                        <% if (congViecList && congViecList.length > 0) { %>
+                            <% congViecList.forEach(function(cv) { %>
+                                <div class="schedule-item">
+                                    <div class="schedule-time">Hạn: <%= new Date(cv.HanChot).toLocaleDateString('vi-VN') %></div>
+                                    <div class="schedule-content">
+                                        <div class="schedule-title"><%= cv.TieuDe %></div>
+                                        <div class="schedule-location">
+                                            <span>📌</span> <%= cv.NoiDung %>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-status <%= cv.MucDoUuTien === 'Cao' ? 'status-ongoing' : 'status-upcoming' %>">
+                                        <%= cv.TrangThai %>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p style="padding: 10px; color: #7f8c8d;">Tuyệt vời! Bạn không có công việc nào tồn đọng.</p>
+                        <% } %>
+                    </div>
+
+                    <div class="schedule-section">
+                        <div class="schedule-header">
+
+                            <h2>📢 Thông báo mới</h2>
+                            <br>
+                        </div>
+                        
+                        <% if (thongBaoList && thongBaoList.length > 0) { %>
+                            <% thongBaoList.forEach(function(tb) { %>
+                                <div class="schedule-item">
+                                    <div style="background: #f3e6ff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                                        <%= tb.LoaiTin === 'Sự kiện' ? '🎉' : (tb.LoaiTin === 'Công việc' ? '💼' : '📝') %>
+                                    </div>
+                                    <div class="schedule-content">
+                                        <div class="schedule-title"><%= tb.TieuDe %></div>
+                                        <div class="schedule-location"><%= tb.NoiDung %></div>
+                                    </div>
+                                    <div style="color: #7f8c8d; font-size: 12px;">
+                                        <%= new Date(tb.NgayDang).toLocaleDateString('vi-VN') %>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                </div>
+ 
+                <div>
+                    <div class="attendance-summary">
+                        <!-- <div class="summary-title">
+                            <span>📊</span> Chấm công hôm nay
+                        </div>
+                        
+                        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f3e6ff, #e6f3ff); border-radius: 10px; margin-bottom: 20px;">
+                            <% if (chamCongToday && chamCongToday.GioCheckIn) { %>
+                                <div style="font-size: 48px; color: #8e44ad; margin-bottom: 10px;">
+                                    <% 
+                                        // Format giờ checkin từ SQL (TIME) thành HH:mm
+                                        let gio = new Date(chamCongToday.GioCheckIn);
+                                        let timeString = chamCongToday.GioCheckIn.toISOString ? chamCongToday.GioCheckIn.toISOString().substring(11, 16) : chamCongToday.GioCheckIn;
+                                    %>
+                                    <%= timeString %>
+                                </div>
+                                <div style="color: #2c3e50;">Đã check-in</div>
+                                <div>
+                                    Trạng thái: <%= chamCongToday.TrangThai %>
+                                </div>
+                            <% } else { %>
+                                <div style="font-size: 48px; color: #7f8c8d; margin-bottom: 10px;">--:--</div>
+                                <div style="color: #e74c3c; font-weight: bold;">Chưa check-in</div>
+                                <p style="font-size: 12px; margin-top: 5px; color: #7f8c8d;">Vui lòng chấm công để bắt đầu ngày làm việc</p>
+                            <% } %>
+                        </div> -->
+                    
+                    <!-- xem giờ chấm công hôm nay và thao tác nhanh
+                    <div class="attendance-summary" style="margin-top: 30px;">
+                        
+                    </div> -->
+                    <div class="summary-title">
+                        <span>⚡</span> Thao tác nhanh
+                    </div>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" onclick="alert('Đã gửi yêu cầu nghỉ phép!')">
+                            <span>📅</span>
+                            Đăng ký nghỉ
+                        </button>
+                        <button class="quick-action-btn" onclick="alert('Đã gửi yêu cầu tạm ứng!')">
+                            <span>💰</span>
+                            Tạm ứng lương
+                        </button>
+                        <button class="quick-action-btn" onclick="alert('Đã gửi yêu cầu đổi ca!')">
+                            <span>🔄</span>
+                            Đổi ca
+                        </button>
+                        <button class="quick-action-btn" onclick="alert('Đã gửi phản hồi!')">
+                            <span>💬</span>
+                            Góp ý
+                        </button>
+                    </div>
+                </div>
+                <!-- chat với quản lý -->
+                <div class="chat-wrapper" style="margin-top: 30px;">
+                    <div class="chat-header">
+                        <span>💬</span> Trò chuyện với Quản lý
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message admin-msg">
+                            <div class="msg-sender">Quản lý</div>
+                            <div class="msg-bubble">Chào bạn, bạn cần hỗ trợ gì về chấm công hay lịch làm việc không?</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Nhập tin nhắn của bạn..." onkeypress="handleChatKeyPress(event)">
+                        <button onclick="sendMessage()">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trang Chấm công -->
+        <div id="attendance-page" class="page-content">
+            <h1 style="color: #8e44ad; margin-bottom: 30px;">⏱️ Chấm công</h1>
+            
+            <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <p style="text-align: center; color: #7f8c8d; padding: 50px;">Nội dung trang chấm công đang được phát triển...</p>
+            </div>
+        </div> 
+
+        <!-- Trang Thu nhập -->
+        <div id="income-page" class="page-content">
+            <h1 style="color: #8e44ad; margin-bottom: 30px;">💰 Thu nhập của tôi</h1>
+            
+            <div class="income-stats">
+                <div class="stat-card">
+                    <div style="color: #7f8c8d;">Tổng giờ công</div>
+                    <div class="stat-value">176 giờ</div>
+                </div>
+                <div class="stat-card">
+                    <div style="color: #7f8c8d;">Ngày công thực tế</div>
+                    <div class="stat-value">22</div>
+                </div>
+                <div class="stat-card highlight">
+                    <div>Tổng thu nhập dự kiến</div>
+                    <div class="stat-value">12.500.000 ₫</div>
+                </div>
+            </div>
+
+            <div class="salary-table">
+                <h3 style="color: #8e44ad; margin-bottom: 20px;">Bảng lương chi tiết - Tháng 3/2026</h3>
+                <table>
+                    <tr>
+                        <th>Khoản mục</th>
+                        <th>Số tiền</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                    <tr>
+                        <td>Lương cơ bản</td>
+                        <td>8.000.000 ₫</td>
+                        <td>22 ngày công</td>
+                    </tr>
+                    <tr>
+                        <td>Phụ cấp ăn trưa</td>
+                        <td>1.000.000 ₫</td>
+                        <td>50.000đ/ngày</td>
+                    </tr>
+                    <tr>
+                        <td>Phụ cấp xăng xe</td>
+                        <td>500.000 ₫</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Thưởng chuyên cần</td>
+                        <td>500.000 ₫</td>
+                        <td>Không nghỉ, không trễ</td>
+                    </tr>
+                    <tr>
+                        <td>Tăng ca</td>
+                        <td>2.500.000 ₫</td>
+                        <td>25 giờ</td>
+                    </tr>
+                    <tr style="font-weight: 600; background-color: #f3e6ff;">
+                        <td>Tổng thu nhập</td>
+                        <td>12.500.000 ₫</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="chart-container">
+                <h3 style="color: #8e44ad; margin-bottom: 20px;">Thống kê chấm công tháng 3</h3>
+                <div style="display: flex; gap: 20px; justify-content: space-around;">
+                    <div style="text-align: center;">
+                        <div style="width: 100px; height: 100px; border-radius: 50%; background: conic-gradient(#27ae60 0deg 290deg, #f1c40f 290deg 320deg, #e74c3c 320deg 360deg);"></div>
+                        <div style="margin-top: 15px;">
+                            <p><span style="color: #27ae60;">●</span> Đi làm: 22 ngày</p>
+                            <p><span style="color: #f1c40f;">●</span> Nghỉ phép: 2 ngày</p>
+                            <p><span style="color: #e74c3c;">●</span> Đi trễ: 2 lần</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trang Đào tạo -->
+        <div id="training-page" class="page-content">
+            <h1 style="color: #8e44ad; margin-bottom: 30px;">📚 Tài liệu đào tạo</h1>
+            
+            <div class="training-layout">
+                <div class="training-categories">
+                    <h3 style="color: #8e44ad; margin-bottom: 20px;">Danh mục</h3>
+                    <div class="category-item active" onclick="selectCategory(this, 'process')">
+                        📁 Quy trình chế biến
+                    </div>
+                    <div class="category-item" onclick="selectCategory(this, 'recipes')">
+                        📁 Công thức món ăn
+                    </div>
+                    <div class="category-item" onclick="selectCategory(this, 'service')">
+                        📁 Quy tắc phục vụ bàn
+                    </div>
+                    <div class="category-item" onclick="selectCategory(this, 'safety')">
+                        📁 An toàn vệ sinh thực phẩm
+                    </div>
+                </div>
+
+                <div class="training-content" id="training-content-area">
+                    <h3 style="color: #8e44ad; margin-bottom: 20px;">Quy trình chế biến thức ăn</h3>
+                    
+                    <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+                        <h4 style="color: #8e44ad;">1. Tiếp nhận nguyên liệu</h4>
+                        <p style="margin-top: 10px;">- Kiểm tra chất lượng nguyên liệu đầu vào</p>
+                        <p>- Bảo quản nguyên liệu đúng nhiệt độ</p>
+                        <p>- Phân loại nguyên liệu theo từng khu vực</p>
+                    </div>
+
+                    <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+                        <h4 style="color: #8e44ad;">2. Sơ chế</h4>
+                        <p style="margin-top: 10px;">- Rửa sạch nguyên liệu</p>
+                        <p>- Cắt thái theo đúng kích thước quy định</p>
+                        <p>- Bảo quản nguyên liệu đã sơ chế</p>
+                    </div>
+
+                    <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+                        <h4 style="color: #8e44ad;">3. Chế biến</h4>
+                        <p style="margin-top: 10px;">- Tuân thủ công thức chuẩn</p>
+                        <p>- Đảm bảo nhiệt độ nấu phù hợp</p>
+                        <p>- Kiểm tra chất lượng món ăn trước khi phục vụ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trang Điều khoản và Chính sách -->
+        <div id="policy-page" class="page-content">
+            <h1 style="color: #8e44ad; margin-bottom: 30px;">📜 Điều khoản và Chính sách</h1>
+            
+            <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #8e44ad; border-bottom: 2px solid #f3e6ff; padding-bottom: 10px; margin-bottom: 20px;">1. Điều khoản sử dụng</h3>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">1.1. Nhân viên phải sử dụng hệ thống chấm công bằng khuôn mặt chính xác, không mạo danh.</p>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">1.2. Mọi thông tin chấm công được ghi nhận là căn cứ tính lương và phúc lợi.</p>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">1.3. Nhân viên có trách nhiệm bảo mật thông tin tài khoản.</p>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #8e44ad; border-bottom: 2px solid #f3e6ff; padding-bottom: 10px; margin-bottom: 20px;">2. Chính sách bảo mật</h3>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">2.1. Dữ liệu khuôn mặt được mã hóa và bảo vệ theo tiêu chuẩn.</p>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">2.2. Chỉ cấp quản lý và nhân viên mới có quyền truy cập dữ liệu cá nhân.</p>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">2.3. Không chia sẻ dữ liệu cho bên thứ ba khi chưa có sự đồng ý.</p>
+                </div>
+
+                <div>
+                    <h3 style="color: #8e44ad; border-bottom: 2px solid #f3e6ff; padding-bottom: 10px; margin-bottom: 20px;">3. Quy định về chấm công</h3>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">3.1. Giờ làm việc: 8h00 - 17h30 (nghỉ trưa 12h-13h30)</p>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">3.2. Check-in trước 8h, check-out sau 17h30</p>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">3.3. Đi trễ quá 15 phút bị trừ 1 giờ công</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trang Hướng dẫn -->
+        <div id="guide-page" class="page-content">
+            <h1 style="color: #8e44ad; margin-bottom: 30px;">❓ Hướng dẫn sử dụng</h1>
+            
+            <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #8e44ad;">📱 Hướng dẫn chấm công</h3>
+                    <div style="margin-top: 15px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+                        <p>1. Đảm bảo đủ ánh sáng khi chụp ảnh nhận diện</p>
+                        <p>2. Đứng thẳng, nhìn thẳng vào camera</p>
+                        <p>3. Không đeo khẩu trang, kính râm</p>
+                        <p>4. GPS sẽ tự động xác nhận bạn đang ở công ty</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #8e44ad;">💰 Hướng dẫn xem lương</h3>
+                    <div style="margin-top: 15px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+                        <p>• Vào tab "Thu nhập" để xem chi tiết lương</p>
+                        <p>• Chọn tháng muốn xem trong dropdown</p>
+                        <p>• Xem chi tiết các khoản và tổng thu nhập</p>
+                        <p>• Bảng lương được cập nhật vào ngày 05 hàng tháng</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: #8e44ad;">🆘 Quên mật khẩu / Liên hệ hỗ trợ</h3>
+                    <div style="margin-top: 15px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+                        <p>📞 Hotline: 1900 1234 (giờ hành chính)</p>
+                        <p>📧 Email: support@company.com</p>
+                        <p>💬 Chat trực tiếp với IT support (8h-22h)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trang Thông tin cá nhân -->
+        <div id="profile-page" class="page-content">
+            <h1 style="color: #8e44ad; margin-bottom: 30px;">👤 Thông tin cá nhân</h1>
+            
+            <div class="profile-grid">
+                <div class="profile-avatar-section">
+                    <div class="profile-avatar">👨</div>
+                    <h3 style="color: #8e44ad; margin: 15px 0;">Phạm Hồng Quý</h3>
+                    <p style="color: #7f8c8d;">Nhân viên chính thức</p>
+                    <button class="update-avatar-btn">📷 Cập nhật ảnh</button>
+                </div>
+
+                <div class="profile-info-section">
+                    <div class="info-group">
+                        <h3>Thông tin cơ bản</h3>
+                        <div class="info-row">
+                            <span class="info-label">Họ và tên:</span>
+                            <span class="info-value">Phạm Hồng Quý</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Ngày tháng năm sinh:</span>
+                            <span class="info-value">15/05/2000</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Giới tính:</span>
+                            <span class="info-value">Nam</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value">quy.ph@company.com</span>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <h3>Giấy tờ tùy thân</h3>
+                        <div class="info-row">
+                            <span class="info-label">Số CCCD:</span>
+                            <span class="info-value">123456789</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Ngày cấp:</span>
+                            <span class="info-value">01/01/2015</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Nơi cấp:</span>
+                            <span class="info-value">Cục CSDLQG về dân cư</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Địa chỉ thường trú:</span>
+                            <span class="info-value">Số 1, Đường A, Quận B, TP.HCM</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Địa chỉ tạm trú:</span>
+                            <span class="info-value">Giống thường trú</span>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <h3>Thông tin lương</h3>
+                        <div class="info-row">
+                            <span class="info-label">Mã số thuế:</span>
+                            <span class="info-value">123456789-01</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Số tài khoản NH:</span>
+                            <span class="info-value">1234567890</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Tên ngân hàng:</span>
+                            <span class="info-value">Vietcombank</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Tên người thụ hưởng:</span>
+                            <span class="info-value">PHẠM HỒNG QUÝ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/Home_chamcong.js"></script>
+<%- include('partials/footer') %>

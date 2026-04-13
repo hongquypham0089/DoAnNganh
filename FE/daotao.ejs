@@ -1,0 +1,374 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="css/daotao.css">
+
+    <main class="main-container">
+        <!-- Page Title with Search -->
+        <div class="page-title">
+            <div class="title-left">
+                <span>📚</span>
+                <h1>Xem hướng dẫn về quy trình làm việc</h1>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Tìm kiếm tài liệu, khóa học...">
+                <button onclick="searchTraining()">🔍</button>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories-section">
+            <div class="section-header">
+                <h2>
+                    <span>📋</span> Danh mục đào tạo
+                </h2>
+                <!-- <span class="view-all" onclick="viewAllCategories()">Xem tất cả →</span> -->
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" onclick="selectCategory('che-bien')">
+                    <div class="category-icon">🍳</div>
+                    <h3>Quy trình chế biến</h3>
+                    <p>Quy trình chuẩn trong chế biến món ăn</p>
+                    <div class="document-count">24 tài liệu</div>
+                </div>
+                <div class="category-card" onclick="selectCategory('cong-thuc')">
+                    <div class="category-icon">📝</div>
+                    <h3>Công thức món ăn</h3>
+                    <p>100+ công thức món ăn đặc sắc</p>
+                    <div class="document-count">156 công thức</div>
+                </div>
+                <div class="category-card" onclick="selectCategory('phuc-vu')">
+                    <div class="category-icon">🤵</div>
+                    <h3>Quy tắc phục vụ</h3>
+                    <p>Kỹ năng phục vụ chuyên nghiệp</p>
+                    <div class="document-count">18 tài liệu</div>
+                </div>
+                <div class="category-card" onclick="selectCategory('ve-sinh')">
+                    <div class="category-icon">🧹</div>
+                    <h3>Vệ sinh an toàn</h3>
+                    <p>An toàn thực phẩm & vệ sinh</p>
+                    <div class="document-count">15 tài liệu</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Training Layout -->
+        <div class="training-layout">
+            <!-- Sidebar -->
+            <div class="training-sidebar">
+                <div class="sidebar-title">
+                    <span>📂</span> Danh mục
+                </div>
+                <ul class="category-list" id="sidebarCategoryList">
+                    <li style="text-align: center; color: #888;">Đang tải danh mục...</li>
+                </ul>
+
+                <!-- <div class="filter-section">
+                    <div class="filter-title">Lọc theo</div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="pdf" checked>
+                        <label for="pdf">Tài liệu PDF</label>
+                        <span>156</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="video">
+                        <label for="video">Video hướng dẫn</label>
+                        <span>42</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="infographic">
+                        <label for="infographic">Infographic</label>
+                        <span>15</span>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-title">Độ khó</div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="beginner">
+                        <label for="beginner">Cơ bản</label>
+                        <span>89</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="intermediate">
+                        <label for="intermediate">Trung cấp</label>
+                        <span>78</span>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="advanced">
+                        <label for="advanced">Nâng cao</label>
+                        <span>46</span>
+                    </div>
+                </div> -->
+            </div>
+
+            <!-- Main Content -->
+            <div class="training-content">
+                <div class="content-header">
+                    <h2>Tài liệu phổ biến</h2>
+                    <select class="sort-select" onchange="sortDocuments(this)">
+                        <option>Mới nhất</option>
+                        <option>Xem nhiều nhất</option>
+                        <option>Tải nhiều nhất</option>
+                        <option>A - Z</option>
+                    </select>
+                </div>
+
+                <div class="documents-grid">
+                    <div class="document-card" onclick="viewDocument(1)">
+                        <div class="document-icon">📄</div>
+                        <div class="document-info">
+                            <h4>Quy trình chế biến Phở bò</h4>
+                            <p>Hướng dẫn chi tiết từ khâu chọn nguyên liệu đến nấu nước dùng</p>
+                            <div class="document-meta">
+                                <span>📅 15/03/2026</span>
+                                <span>👁️ 1.2k lượt xem</span>
+                                <span>📥 350 tải</span>
+                            </div>
+                        </div>
+                        <button class="download-btn" onclick="downloadDocument(1, event)">📥</button>
+                    </div>
+
+                    <div class="document-card" onclick="viewDocument(2)">
+                        <div class="document-icon">📄</div>
+                        <div class="document-info">
+                            <h4>Quy tắc phục vụ bàn chuyên nghiệp</h4>
+                            <p>10 bước phục vụ khách từ A-Z</p>
+                            <div class="document-meta">
+                                <span>📅 14/03/2026</span>
+                                <span>👁️ 890 lượt xem</span>
+                                <span>📥 234 tải</span>
+                            </div>
+                        </div>
+                        <button class="download-btn" onclick="downloadDocument(2, event)">📥</button>
+                    </div>
+
+                    <div class="document-card" onclick="viewDocument(3)">
+                        <div class="document-icon">📊</div>
+                        <div class="document-info">
+                            <h4>Quy trình vệ sinh nhà bếp</h4>
+                            <p>Checklist vệ sinh hàng ngày, tuần, tháng</p>
+                            <div class="document-meta">
+                                <span>📅 13/03/2026</span>
+                                <span>👁️ 2.1k lượt xem</span>
+                                <span>📥 567 tải</span>
+                            </div>
+                        </div>
+                        <button class="download-btn" onclick="downloadDocument(3, event)">📥</button>
+                    </div>
+
+                    <div class="document-card" onclick="viewDocument(4)">
+                        <div class="document-icon">📝</div>
+                        <div class="document-info">
+                            <h4>Công thức Bún chả Hà Nội</h4>
+                            <p>Công thức chuẩn vị Hà thành</p>
+                            <div class="document-meta">
+                                <span>📅 12/03/2026</span>
+                                <span>👁️ 3.4k lượt xem</span>
+                                <span>📥 890 tải</span>
+                            </div>
+                        </div>
+                        <button class="download-btn" onclick="downloadDocument(4, event)">📥</button>
+                    </div>
+                </div>
+
+                <!-- Video Section -->
+                <div class="video-section">
+                    <div class="section-header">
+                        <h2>
+                            <span>🎥</span> Video hướng dẫn
+                        </h2>
+                        <!-- <span class="view-all" onclick="viewAllVideos()">Xem tất cả →</span> -->
+                    </div>
+                    <div class="video-grid">
+                        <div class="video-card" onclick="playVideo(1)">
+                            <div class="video-thumbnail">
+                                ▶️
+                                <span class="video-duration">15:30</span>
+                            </div>
+                            <div class="video-info">
+                                <h4>Kỹ thuật thái rau củ</h4>
+                                <p>Hướng dẫn các kiểu thái cơ bản</p>
+                                <div class="video-views">👁️ 2.5k lượt xem</div>
+                            </div>
+                        </div>
+                        <div class="video-card" onclick="playVideo(2)">
+                            <div class="video-thumbnail">
+                                ▶️
+                                <span class="video-duration">12:45</span>
+                            </div>
+                            <div class="video-info">
+                                <h4>Pha chế nước chấm</h4>
+                                <p>Công thức nước chấm cho 20 món</p>
+                                <div class="video-views">👁️ 1.8k lượt xem</div>
+                            </div>
+                        </div>
+                        <div class="video-card" onclick="playVideo(3)">
+                            <div class="video-thumbnail">
+                                ▶️
+                                <span class="video-duration">20:15</span>
+                            </div>
+                            <div class="video-info">
+                                <h4>Trang trí món ăn</h4>
+                                <p>Kỹ thuật plating chuyên nghiệp</p>
+                                <div class="video-views">👁️ 3.2k lượt xem</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Learning Progress
+        <div class="learning-section">
+            <div class="learning-header">
+                <h3>
+                    <span>📊</span> Quá trình học tập của tôi
+                </h3>
+                <div class="learning-stats">
+                    <div class="learning-stat">
+                        <div class="value">12</div>
+                        <div class="label">Đã học</div>
+                    </div>
+                    <div class="learning-stat">
+                        <div class="value">5</div>
+                        <div class="label">Đang học</div>
+                    </div>
+                    <div class="learning-stat">
+                        <div class="value">8</div>
+                        <div class="label">Chứng chỉ</div>
+                    </div>
+                </div>
+            </div>
+            <div class="learning-list">
+                <div class="learning-item">
+                    <div class="course-icon">🍳</div>
+                    <div class="course-info">
+                        <h4>Quy trình chế biến món ăn chuyên nghiệp</h4>
+                        <p>Tiến độ: 75% - Còn 2 bài học</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <button class="continue-btn" onclick="continueLearning(1)">Tiếp tục</button>
+                </div>
+                <div class="learning-item">
+                    <div class="course-icon">📝</div>
+                    <div class="course-info">
+                        <h4>100 công thức món Á cao cấp</h4>
+                        <p>Tiến độ: 45% - Còn 15 bài học</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <button class="continue-btn" onclick="continueLearning(2)">Tiếp tục</button>
+                </div>
+                <div class="learning-item">
+                    <div class="course-icon">🤵</div>
+                    <div class="course-info">
+                        <h4>Kỹ năng phục vụ khách VIP</h4>
+                        <p>Tiến độ: 30% - Còn 7 bài học</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    <button class="continue-btn" onclick="continueLearning(3)">Tiếp tục</button>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Featured Courses
+        <div class="featured-section">
+            <div class="section-header">
+                <h2>
+                    <span>🌟</span> Khóa học nổi bật
+                </h2>
+                <span class="view-all" onclick="viewAllCourses()">Xem tất cả →</span>
+            </div>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        👨‍🍳
+                        <span class="course-badge">Phổ biến</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>Nghệ thuật ẩm thực Việt</h3>
+                        <p>Khám phá tinh hoa ẩm thực 3 miền</p>
+                        <div class="course-meta">
+                            <span>⏰ 25 bài học</span>
+                            <span>👥 1.2k học viên</span>
+                        </div>
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">Chưa bắt đầu</div>
+                        </div>
+                        <button class="start-btn" onclick="startCourse(1)">Bắt đầu học</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">
+                        🍣
+                        <span class="course-badge">Mới</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>Ẩm thực Nhật Bản</h3>
+                        <p>Từ Sushi đến Ramen - Bí quyết từ đầu bếp Nhật</p>
+                        <div class="course-meta">
+                            <span>⏰ 32 bài học</span>
+                            <span>👥 856 học viên</span>
+                        </div>
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">Chưa bắt đầu</div>
+                        </div>
+                        <button class="start-btn" onclick="startCourse(2)">Bắt đầu học</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">
+                        🥘
+                        <span class="course-badge">Hot</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>Quản lý bếp chuyên nghiệp</h3>
+                        <p>Kỹ năng quản lý và vận hành bếp</p>
+                        <div class="course-meta">
+                            <span>⏰ 18 bài học</span>
+                            <span>👥 2.3k học viên</span>
+                        </div>
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">Chưa bắt đầu</div>
+                        </div>
+                        <button class="start-btn" onclick="startCourse(3)">Bắt đầu học</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </main>
+
+    <!-- Document Viewer Modal -->
+    <div class="modal" id="documentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Quy trình chế biến Phở bò</h3>
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="document-viewer">
+                <div class="document-preview">
+                    <span>📄</span>
+                    <p style="margin-top: 20px; color: #7f8c8d;">PDF - 2.5 MB</p>
+                </div>
+                <div class="document-actions">
+                    <button class="view-btn" onclick="viewDocumentFull()">📖 Xem tài liệu</button>
+                    <button class="download-btn-large" onclick="downloadCurrentDocument()">📥 Tải xuống</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/daotao.js"></script>
+<%- include('partials/footer') %>

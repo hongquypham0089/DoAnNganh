@@ -1,0 +1,170 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="css/CheckIn.css">
+    <main class="main-container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <span>📸</span> Chấm công - Nhận diện khuôn mặt
+        </div>
+
+        <!-- Main Attendance Layout -->
+        <div class="attendance-layout">
+            <!-- Left: Camera Section -->
+            <div class="camera-section">
+                <input type="hidden" id="currentMaNV" value="<%= user ? user.id : '' %>">
+                <div class="camera-header">
+                    <h3>
+                        <span>🎥</span> Camera nhận diện
+                    </h3>
+                    <div class="camera-status" id="cameraStatus">
+                        <span>●</span> Đang hoạt động
+                    </div>
+                </div>
+
+                <div class="camera-frame" id="cameraFrame" style="position: relative; overflow: hidden; background: #000; border-radius: 10px;">
+                    <video id="videoElement" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+                    <canvas id="canvasElement" style="display: none;"></canvas>
+
+                    <div class="loading-overlay" id="cameraLoading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+ 
+                <div class="backup-attendance-card" style="margin-top: 30px; padding: 20px; border: 2px solid #ddd; border-radius: 12px; background: #fafafa;">
+                    
+                    <div class="backup-info" style="text-align: center; margin-bottom: 20px;">
+                        <span class="warning-icon" style="font-size: 30px; display: block; margin-bottom: 10px;">⚠️</span>
+                        <p style="color: #333; font-weight: bold; font-size: 15px; line-height: 1.6;">
+                            Bạn gặp trục trặc khi chấm công bằng khuôn mặt? <br>
+                            Hãy gửi yêu cầu nhờ Quản lý (Admin) kiểm tra và chấm công hộ bạn.
+                        </p>
+                    </div>
+
+                    <div id="backup-initial-area" style="text-align: center; display: block;">
+                        <button class="request-help-btn" onclick="showManualRequestForm()" style="background: #e67e22; color: white; border: none; padding: 12px 25px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: background 0.3s; font-size: 15px;">
+                            Gửi yêu cầu chấm công hộ
+                        </button>
+                    </div>
+
+                    <div id="backup-form-area" style="display: none; border-top: 1px solid #ddd; padding-top: 15px; margin-top: 15px;">
+                        <p style="text-align: center; font-weight: bold; color: #333; margin-bottom: 15px;">Bạn muốn check-in hay check-out?</p>
+                        
+                        <div class="camera-controls manual-controls" style="display: flex; gap: 10px;">
+                            <button class="camera-btn manual-in-btn" style="flex: 1; justify-content: center;" onclick="requestManual('CheckIn')">
+                                📝 Check-in thủ công
+                            </button>
+                            <button class="camera-btn manual-out-btn" style="flex: 1; justify-content: center;" onclick="requestManual('CheckOut')">
+                                🏃 Check-out thủ công
+                            </button>
+                        </div>
+                        
+                        <div class="file-upload-section" style="margin-top: 20px;">
+                            <label style="display: block; font-size: 14px; color: #555; margin-bottom: 8px;"><b>Ảnh minh chứng</b> (Tải lên ảnh chụp bạn tại nơi làm việc):</label>
+                            
+                            <div class="custom-file-input">
+                                <label for="attendanceProof" class="file-label" id="fileLabel" style="display: inline-block; background: #f8f9fa; color: #555; border: 1px solid #ccc; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 13px;">
+                                    <span>Tải ảnh lên (File ảnh)</span>
+                                </label>
+                                <input type="file" id="attendanceProof" name="attendanceProof" accept="image/*" style="display: none;" onchange="updateFileLabel(this)">
+                            </div>
+                        </div>
+                        
+                        <div class="camera-note" style="text-align: center; margin-top: 10px; font-size: 13px; color: #7f8c8d; font-style: italic;">
+                            *Chỉ sử dụng khi hệ thống không nhận diện được khuôn mặt
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Action Panel -->
+            <div class="attendance-panel">
+                <div class="date-time">
+                    <div class="current-time" id="currentTime">--:--:--</div>
+                    <div class="current-date" id="currentDate">---, ngày -- tháng -- ----</div>
+                </div>
+
+                <div class="employee-info">
+                    <div class="employee-avatar-small">👨</div>
+                    <div class="employee-details">
+                        <h4><%= user ? user.TenNhanVien : 'Đang tải...' %></h4>
+                        <p>Mã NV: <%= user ? user.id : '---' %> | <%= user ? (user.PhongBan || 'Phòng Kỹ thuật') : 'Phòng ban' %></p>
+                    </div>
+                </div>
+
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="check-btn checkin-btn" onclick="handleCheckIn()" id="checkinBtn">
+                        <span>📸</span>
+                        CHẤM CÔNG
+                    </button>
+                </div>
+
+                <!-- Today's Attendance Summary -->
+                <div class="today-summary">
+                    <h4>
+                        <span>📋</span> Hôm nay (15/03/2026)
+                    </h4>
+                    <div class="summary-item">
+                        <span class="summary-label">Check-in:</span>
+                        <span class="summary-value checkin-time" id="todayCheckIn">--:--</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Check-out:</span>
+                        <span class="summary-value checkout-time" id="todayCheckOut">--:--</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Tổng giờ:</span>
+                        <span class="summary-value" id="todayTotalHours">0 giờ</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Trạng thái:</span>
+                        <span class="summary-value" id="todayStatus">Chưa check-in</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Attendance History -->
+        <div class="recent-attendance">
+            <div class="section-header">
+                <h3>
+                    <span>📊</span> Lịch sử chấm công 7 ngày gần nhất
+                </h3>
+            </div>
+
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Tổng giờ</th>
+                        <th>Trạng thái</th>
+                        <th>Xác thực</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center;">Đang tải dữ liệu...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">✅</div>
+            <h3 id="modalTitle">Check-in thành công!</h3>
+            <p id="modalMessage">Cảm ơn bạn đã check-in đúng giờ</p>
+            <div class="modal-time">
+                <div class="time" id="modalTime">08:00</div>
+                <div class="date" id="modalDate">Thứ Sáu, 15/03/2026</div>
+            </div>
+            <button class="modal-btn" onclick="closeModal()">Đóng</button>
+        </div>
+    </div>
+    <script src="js/CheckIn.js"></script>
+<%- include('partials/footer') %>

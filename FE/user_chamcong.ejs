@@ -1,0 +1,368 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="css/user_chamcong.css">
+<main class="main-container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <div class="title-content">
+                <span>👤</span>
+                <h1>Thông tin cá nhân</h1>
+            </div>
+        </div>
+
+        <!-- Profile Layout -->
+        <div class="profile-layout">
+            <!-- Left Column - Profile Card -->
+            <div class="profile-card">
+                <div class="avatar-section">
+                    <div class="avatar-wrapper">
+                        <div class="profile-avatar" id="avatarPreviewContainer">
+                            <% if (userInfo.AnhDaiDien) { %>
+                                <img src="<%= userInfo.AnhDaiDien %>" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                            <% } else { %>
+                                👨
+                            <% } %>
+                        </div>
+                        <div class="change-avatar-btn" onclick="document.getElementById('avatarInput').click()">
+                            📷
+                        </div>
+                        <input type="file" id="avatarInput" style="display: none;" accept="image/*" onchange="uploadAvatar(this)">
+                    </div>
+                    <div class="profile-name">
+                        <h2><%= userInfo.HoTen %></h2>
+                        <div class="position"><%= userInfo.ChucVu %> - Phòng <%= userInfo.TenPhong || 'Chưa xếp phòng' %></div>
+                        <div class="employee-id">Mã NV: <%= userInfo.MaNV %></div>
+                    </div>
+                </div>
+
+                <div class="profile-contacts">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-info">
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value"><%= userInfo.Email_CongTy || userInfo.Email_CaNhan || 'Chưa cập nhật' %></div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-info">
+                            <div class="contact-label">Số điện thoại</div>
+                            <div class="contact-value"><%= userInfo.SoDienThoai || 'Chưa cập nhật' %></div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-info">
+                            <div class="contact-label">Địa chỉ</div>
+                            <div class="contact-value"><%= userInfo.DiaChi_ThuongTru || 'Chưa cập nhật' %></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-tabs">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="switchTab('basic')">
+                        <span>📋</span> Thông tin cơ bản
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('identity')">
+                        <span>🆔</span> Giấy tờ tùy thân
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('bank')">
+                        <span>💳</span> Thông tin lương
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('security')">
+                        <span>🔒</span> Bảo mật
+                    </button>
+                </div>
+
+                <div class="tabs-content">
+                    <div id="tab-basic" class="tab-pane active">
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3><span>📋</span> Thông tin cá nhân</h3>
+                                <button class="edit-btn" onclick="openEditModal('basic')">✏️ Chỉnh sửa</button>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-row">
+                                    <span class="info-label">Họ và tên</span>
+                                    <span class="info-value"><%= userInfo.HoTen %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Ngày sinh</span>
+                                    <span class="info-value"><%= userInfo.NgaySinh ? new Date(userInfo.NgaySinh).toLocaleDateString('vi-VN') : 'Chưa cập nhật' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Giới tính</span>
+                                    <span class="info-value"><%= userInfo.GioiTinh || 'Chưa cập nhật' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Nơi sinh (Quê quán)</span>
+                                    <span class="info-value"><%= userInfo.QueQuan || 'Chưa cập nhật' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Dân tộc</span>
+                                    <span class="info-value"><%= userInfo.DanToc || 'Chưa cập nhật' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Tôn giáo</span>
+                                    <span class="info-value"><%= userInfo.TonGiao || 'Không' %></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3><span>📍</span> Địa chỉ liên hệ</h3>
+                                <button class="edit-btn" onclick="openEditModal('address')">✏️ Chỉnh sửa</button>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-row">
+                                    <span class="info-label">Địa chỉ thường trú</span>
+                                    <span class="info-value"><%= userInfo.DiaChi_ThuongTru || 'Chưa cập nhật' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Số điện thoại</span>
+                                    <span class="info-value with-action">
+                                        <%= userInfo.SoDienThoai || 'Chưa cập nhật' %>
+                                        <% if(userInfo.SoDienThoai) { %><button class="copy-btn" onclick="copyText('<%= userInfo.SoDienThoai %>')">📋</button><% } %>
+                                    </span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Email cá nhân</span>
+                                    <span class="info-value"><%= userInfo.Email_CaNhan || 'Chưa cập nhật' %></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3><span>🏢</span> Thông tin công việc</h3>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-row">
+                                    <span class="info-label">Phòng ban</span>
+                                    <span class="info-value"><%= userInfo.TenPhong || 'Chưa xếp phòng' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Chức vụ</span>
+                                    <span class="info-value"><%= userInfo.ChucVu || 'Chưa cập nhật' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Ngày vào làm</span>
+                                    <span class="info-value"><%= userInfo.NgayVaoLam ? new Date(userInfo.NgayVaoLam).toLocaleDateString('vi-VN') : 'Chưa cập nhật' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Loại hợp đồng</span>
+                                    <span class="info-value"><%= userInfo.LoaiHopDong || 'Chưa cập nhật' %></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-bank" class="tab-pane">
+                        <div class="bank-card">
+                            <div class="bank-header">
+                                <span class="bank-name"><%= userInfo.TenNganHang || 'Chưa cập nhật NH' %></span>
+                                <span class="bank-logo">🏦</span>
+                            </div>
+                            <div class="bank-number"><%= userInfo.SoTaiKhoan || '---- ---- ----' %></div>
+                            <div class="bank-holder"><%= userInfo.ChuTaiKhoan || userInfo.HoTen.toUpperCase() %></div>
+                            <div class="bank-detail">
+                                <span>Chi nhánh: <%= userInfo.ChiNhanhNganHang || '...' %></span>
+                            </div>
+                        </div>
+
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3><span>💰</span> Thông tin thuế & nhận lương</h3>
+                                <button class="edit-btn" onclick="openEditModal('bank')">✏️ Chỉnh sửa</button>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-row">
+                                    <span class="info-label">Mã số thuế</span>
+                                    <span class="info-value with-action">
+                                        <%= userInfo.MaSoThue || 'Chưa cập nhật' %>
+                                        <% if(userInfo.MaSoThue) { %><button class="copy-btn" onclick="copyText('<%= userInfo.MaSoThue %>')">📋</button><% } %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <!-- Right Column - Tabs -->
+
+                <div class="tabs-content">
+                    <div id="tab-identity" class="tab-pane">
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3>
+                                    <span>🆔</span> CMND/CCCD
+                                </h3>
+                                <button class="edit-btn" onclick="openEditModal('id')">
+                                    ✏️ Chỉnh sửa
+                                </button>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-row">
+                                    <span class="info-label">Số CCCD</span>
+                                    <span class="info-value with-action">
+                                        <%= userInfo.CCCD || 'Chưa cập nhật' %>
+                                        <% if(userInfo.CCCD) { %>
+                                            <button class="copy-btn" onclick="copyText('<%= userInfo.CCCD %>')">📋</button>
+                                        <% } %>
+                                    </span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Ngày cấp</span>
+                                    <span class="info-value">
+                                        <%= userInfo.NgayCapCCCD ? new Date(userInfo.NgayCapCCCD).toLocaleDateString('vi-VN') : 'Chưa cập nhật' %>
+                                    </span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Nơi cấp</span>
+                                    <span class="info-value"><%= userInfo.NoiCapCCCD || 'Chưa cập nhật' %></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Ngày hết hạn</span>
+                                    <span class="info-value">
+                                        <%= userInfo.NgayHetHanCCCD ? new Date(userInfo.NgayHetHanCCCD).toLocaleDateString('vi-VN') : 'Chưa cập nhật' %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- tải ảnh cccd lên
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3>
+                                    <span>📎</span> Tài liệu đính kèm
+                                </h3>
+                                <button class="edit-btn" onclick="uploadDocument()">
+                                    📤 Tải lên
+                                </button>
+                            </div>
+                            <div class="documents-list">
+                                <div class="document-item">
+                                    <div class="document-icon">📄</div>
+                                    <div class="document-info">
+                                        <div class="document-name">CMND_CCCD_<%= userInfo.HoTen.replace(/\s+/g, '') %>.pdf</div>
+                                        <div class="document-meta">PDF • Chưa có file</div>
+                                    </div>
+                                    <button class="document-action" onclick="downloadDocument('cccd')">📥</button>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <!-- Tab 4: Bảo mật -->
+                    <div id="tab-security" class="tab-pane">
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3>
+                                    <span>🔒</span> Đổi mật khẩu
+                                </h3>
+                            </div>
+                            <div class="password-form">
+                                <div class="form-group">
+                                    <label>Mật khẩu hiện tại</label>
+                                    <div class="password-input-wrapper">
+                                        <input type="password" id="current-password" placeholder="Nhập mật khẩu hiện tại">
+                                        <button class="toggle-password" onclick="togglePassword('current-password')">👁️</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mật khẩu mới</label>
+                                    <div class="password-input-wrapper">
+                                        <input type="password" id="new-password" placeholder="Nhập mật khẩu mới" onkeyup="checkPasswordStrength()">
+                                        <button class="toggle-password" onclick="togglePassword('new-password')">👁️</button>
+                                    </div>
+                                    <div class="password-strength">
+                                        <div class="strength-bar">
+                                            <div class="strength-fill" id="strength-fill"></div>
+                                        </div>
+                                        <div class="strength-text" id="strength-text">Nhập mật khẩu để kiểm tra độ mạnh</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Xác nhận mật khẩu mới</label>
+                                    <div class="password-input-wrapper">
+                                        <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu mới">
+                                        <button class="toggle-password" onclick="togglePassword('confirm-password')">👁️</button>
+                                    </div>
+                                </div>
+                                <button class="save-password-btn" onclick="changePassword()">Cập nhật mật khẩu</button>
+                            </div>
+                        </div>
+
+
+                        <!-- xác thực 2 lớp và lịch sử đăng nhập
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3>
+                                    <span>📱</span> Xác thực 2 lớp
+                                </h3>
+                                <button class="edit-btn" onclick="setup2FA()">Kích hoạt</button>
+                            </div>
+                            <p style="color: #7f8c8d; margin-top: 10px;">Tăng cường bảo mật cho tài khoản của bạn với xác thực 2 lớp</p>
+                        </div>
+
+                        <div class="info-section">
+                            <div class="section-header">
+                                <h3>
+                                    <span>📋</span> Lịch sử đăng nhập
+                                </h3>
+                            </div>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-date">Hôm nay, 08:30</div>
+                                    <div class="timeline-content">
+                                        <h4>Đăng nhập thành công</h4>
+                                        <p>IP: 192.168.1.100 • TP.HCM, Việt Nam</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">Hôm qua, 17:45</div>
+                                    <div class="timeline-content">
+                                        <h4>Đăng xuất</h4>
+                                        <p>IP: 192.168.1.100 • TP.HCM, Việt Nam</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">Hôm qua, 08:15</div>
+                                    <div class="timeline-content">
+                                        <h4>Đăng nhập thành công</h4>
+                                        <p>IP: 192.168.1.100 • TP.HCM, Việt Nam</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">10/03/2026, 18:00</div>
+                                    <div class="timeline-content">
+                                        <h4>Đổi mật khẩu</h4>
+                                        <p>Thay đổi mật khẩu thành công</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Chỉnh sửa thông tin</h2>
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-form" id="modalForm">
+                <!-- Dynamic form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+    <script>
+        // Chuyển dữ liệu của Backend thành biến JS để hiển thị lên form
+        const currentUserInfo = <%- JSON.stringify(userInfo || {}) %>;
+    </script>
+    <script src="js/user_chamcong.js"></script>
+<%- include('partials/footer') %>

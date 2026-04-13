@@ -1,0 +1,13 @@
+numpy
+opencv-python
+pyodbc
+flask
+flask-cors
+torch
+torchvision
+facenet-pytorch
+Pillow
+tqdm
+scikit-learn
+albumentations
+multer

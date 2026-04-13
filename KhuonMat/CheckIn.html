@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chấm công - Hệ thống chấm công thông minh</title>
+    <link rel="stylesheet" href="CheckIn.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="greeting">
+                Xin chào <span>Phạm Hồng Quý</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span>🚪</span> Đăng xuất
+            </button>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-item">🏠 Trang chủ</a>
+            <a href="#" class="nav-item active">📸 Chấm công</a>
+            <a href="#" class="nav-item">💰 Thu nhập</a>
+            <a href="#" class="nav-item">📚 Đào tạo</a>
+            <a href="#" class="nav-item">📜 Điều khoản & CS</a>
+            <a href="#" class="nav-item">❓ Hướng dẫn</a>
+            <a href="#" class="nav-item">👤 Thông tin cá nhân</a>
+        </div>
+    </nav>
+
+    <main class="main-container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <span>📸</span> Chấm công - Nhận diện khuôn mặt
+        </div>
+
+        <!-- Main Attendance Layout -->
+        <div class="attendance-layout">
+            <!-- Left: Camera Section -->
+            <div class="camera-section">
+                <div class="camera-header">
+                    <h3>
+                        <span>🎥</span> Camera nhận diện
+                    </h3>
+                    <div class="camera-status" id="cameraStatus">
+                        <span>●</span> Đang hoạt động
+                    </div>
+                </div>
+
+                <div class="camera-frame" id="cameraFrame">
+                    <video id="video" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; z-index: 1; position: relative;"></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <div class="camera-placeholder" id="cameraPlaceholder">
+                        <div class="camera-icon">📷</div>
+                        <p>Đang khởi động camera...</p>
+                        <p style="font-size: 14px;">Vui lòng đợi trong giây lát</p>
+                        <div class="face-detection-box"></div>
+                    </div>
+                    <div class="loading-overlay" id="cameraLoading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+
+                <div class="camera-controls">
+                    <button class="camera-btn" onclick="toggleCamera()">
+                        <span>🔄</span> Đổi camera
+                    </button>
+                    <button class="camera-btn" onclick="testCamera()">
+                        <span>⚡</span> Kiểm tra
+                    </button>
+                    <button class="camera-btn danger" onclick="resetCamera()">
+                        <span>🔧</span> Đặt lại
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: Action Panel -->
+            <div class="attendance-panel">
+                <div class="date-time">
+                    <div class="current-time" id="currentTime">--:--:--</div>
+                    <div class="current-date" id="currentDate">---, ngày -- tháng -- ----</div>
+                </div>
+
+                <div class="employee-info">
+                    <div class="employee-avatar-small">👨</div>
+                    <div class="employee-details">
+                        <h4>Phạm Hồng Quý</h4>
+                        <p>Mã NV: 22050089 | Phòng Kỹ thuật</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="check-btn checkin-btn" onclick="handleCheckIn()" id="checkinBtn">
+                        <span>📸</span>
+                        CHECK-IN
+                    </button>
+                    <button class="check-btn checkout-btn" onclick="handleCheckOut()" id="checkoutBtn">
+                        <span>🚪</span>
+                        CHECK-OUT
+                    </button>
+                </div>
+
+                <!-- Today's Attendance Summary -->
+                <div class="today-summary">
+                    <h4>
+                        <span>📋</span> Hôm nay (15/03/2026)
+                    </h4>
+                    <div class="summary-item">
+                        <span class="summary-label">Check-in:</span>
+                        <span class="summary-value checkin-time" id="todayCheckIn">--:--</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Check-out:</span>
+                        <span class="summary-value checkout-time" id="todayCheckOut">--:--</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Tổng giờ:</span>
+                        <span class="summary-value" id="todayTotalHours">0 giờ</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Trạng thái:</span>
+                        <span class="summary-value" id="todayStatus">Chưa check-in</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Attendance History -->
+        <div class="recent-attendance">
+            <div class="section-header">
+                <h3>
+                    <span>📊</span> Lịch sử chấm công 7 ngày gần nhất
+                </h3>
+                <span class="view-all" onclick="viewAllHistory()">Xem tất cả →</span>
+            </div>
+
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Tổng giờ</th>
+                        <th>Trạng thái</th>
+                        <th>Xác thực</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>15/03/2026</td>
+                        <td>--:--</td>
+                        <td>--:--</td>
+                        <td>-</td>
+                        <td><span class="status-badge status-absent">Chưa check-in</span></td>
+                        <td>📸 -</td>
+                    </tr>
+                    <tr>
+                        <td>14/03/2026</td>
+                        <td>08:00</td>
+                        <td>17:30</td>
+                        <td>8.5h</td>
+                        <td><span class="status-badge status-present">Đúng giờ</span></td>
+                        <td>📸 08:00</td>
+                    </tr>
+                    <tr>
+                        <td>13/03/2026</td>
+                        <td>08:15</td>
+                        <td>18:00</td>
+                        <td>8.75h</td>
+                        <td><span class="status-badge status-late">Đi trễ 15'</span></td>
+                        <td>📸 08:15</td>
+                    </tr>
+                    <tr>
+                        <td>12/03/2026</td>
+                        <td>07:55</td>
+                        <td>18:30</td>
+                        <td>9.5h</td>
+                        <td><span class="status-badge status-overtime">Tăng ca</span></td>
+                        <td>📸 07:55</td>
+                    </tr>
+                    <tr>
+                        <td>11/03/2026</td>
+                        <td>08:00</td>
+                        <td>17:30</td>
+                        <td>8.5h</td>
+                        <td><span class="status-badge status-present">Đúng giờ</span></td>
+                        <td>📸 08:00</td>
+                    </tr>
+                    <tr>
+                        <td>10/03/2026</td>
+                        <td>08:05</td>
+                        <td>17:30</td>
+                        <td>8.4h</td>
+                        <td><span class="status-badge status-late">Đi trễ 5'</span></td>
+                        <td>📸 08:05</td>
+                    </tr>
+                    <tr>
+                        <td>09/03/2026</td>
+                        <td>07:50</td>
+                        <td>17:45</td>
+                        <td>8.9h</td>
+                        <td><span class="status-badge status-present">Đúng giờ</span></td>
+                        <td>📸 07:50</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">✅</div>
+            <h3 id="modalTitle">Check-in thành công!</h3>
+            <p id="modalMessage">Cảm ơn bạn đã check-in đúng giờ</p>
+            <div class="modal-time">
+                <div class="time" id="modalTime">08:00</div>
+                <div class="date" id="modalDate">Thứ Sáu, 15/03/2026</div>
+            </div>
+            <button class="modal-btn" onclick="closeModal()">Đóng</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Giới thiệu</a>
+                <a href="#">Liên hệ</a>
+                <a href="#">Tuyển dụng</a>
+                <a href="#">Bảo mật</a>
+            </div>
+            <div class="copyright">
+                © 2026 Công ty TNHH Giải pháp Công nghệ Thông minh
+            </div>
+            <div class="company-info">
+                Hệ thống chấm công thông minh - Phiên bản 2.0
+            </div>
+        </div>
+    </footer>
+    <script src="CheckIn.js"></script>
+</body>
+</html>

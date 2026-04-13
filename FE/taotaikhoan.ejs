@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiếp nhận Nhân Viên & Cấp Tài Khoản</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f8ff; display: flex; justify-content: center; padding-top: 30px; padding-bottom: 30px; }
+        .main-container { width: 500px; }
+        
+        /* CSS cho nút trở về */
+        .btn-back { 
+            display: inline-block; 
+            margin-bottom: 15px; 
+            padding: 10px 20px; 
+            background-color: #bdc3c7; 
+            color: #2c3e50; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 14px;
+        }
+        .btn-back:hover { 
+            background-color: #95a5a6; 
+            color: white; 
+        }
+
+        .form-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; transition: 0.3s; }
+        .form-container h2 { text-align: center; color: #8e44ad; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid #eee; padding-bottom: 10px;}
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; font-size: 14px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-submit { width: 100%; padding: 12px; background-color: #8e44ad; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: 0.3s; font-weight: bold; }
+        .btn-submit:hover { background-color: #9b59b6; }
+        .message { margin-top: 15px; text-align: center; font-weight: bold; font-size: 14px; }
+        .success { color: #27ae60; }
+        .error { color: #c0392b; }
+        
+        /* Làm mờ form 2 khi chưa làm xong form 1 */
+        .disabled-form { opacity: 0.5; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    
+    <button class="btn-back" onclick="window.location.href='/admin'">
+        ⬅ Trở về Trang Quản Lý
+    </button>
+
+    <div class="form-container" id="step1">
+        <h2>Bước 1: Nhập Hồ Sơ Nhân Viên</h2>
+        <form id="addEmployeeForm">
+            <div class="form-group">
+                <label for="newMaNV">Mã Nhân Viên Mới</label>
+                <input type="text" id="newMaNV" placeholder="VD: 22050090" required>
+            </div>
+            <div class="form-group">
+                <label for="hoTen">Họ và Tên</label>
+                <input type="text" id="hoTen" placeholder="VD: Nguyễn Văn C" required>
+            </div>
+            <div class="form-group">
+                <label for="maPhong">Phòng Ban</label>
+                <select id="maPhong">
+                    <option value="1">Bếp</option>
+                    <option value="2">Phục vụ</option>
+                    <option value="3">Kỹ thuật</option>
+                    <option value="4">Hành chính</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="chucVu">Chức Vụ</label>
+                <input type="text" id="chucVu" placeholder="VD: Phục vụ bàn" required>
+            </div>
+            <button type="button" class="btn-submit" onclick="submitAddEmployee()">Lưu Hồ Sơ</button>
+            <div id="msgStep1" class="message"></div>
+        </form>
+    </div>
+
+    <div class="form-container disabled-form" id="step2">
+        <h2>Bước 2: Cấp Tài Khoản Đăng Nhập</h2>
+        <form id="createAccForm">
+            <div class="form-group">
+                <label for="maNV">Mã Nhân Viên (Được cấp tự động từ Bước 1)</label>
+                <input type="text" id="maNV" readonly style="background-color: #e9ecef; color: #555;">
+            </div>
+            <div class="form-group">
+                <label for="username">Tên đăng nhập</label>
+                <input type="text" id="username" placeholder="Nhập tên đăng nhập" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <input type="password" id="password" placeholder="Nhập mật khẩu" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Vai trò hệ thống</label>
+                <select id="role">
+                    <option value="2">Nhân Viên</option>
+                    <option value="1">Admin (Quản lý)</option>
+                </select>
+            </div>
+            <button type="button" class="btn-submit" onclick="submitCreateAccount()">Tạo Tài Khoản</button>
+            <div id="msgStep2" class="message"></div>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    // Hàm xử lý Bước 1: Lưu hồ sơ nhân viên
+    async function submitAddEmployee() {
+        const maNV = document.getElementById('newMaNV').value.trim();
+        const hoTen = document.getElementById('hoTen').value.trim();
+        const maPhong = document.getElementById('maPhong').value;
+        const chucVu = document.getElementById('chucVu').value.trim();
+        const msgBox = document.getElementById('msgStep1');
+
+        if(!maNV || !hoTen || !chucVu) {
+            msgBox.innerHTML = "<span class='error'>Vui lòng nhập đủ thông tin hồ sơ!</span>";
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/add-employee', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ maNV, hoTen, maPhong, chucVu })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                msgBox.innerHTML = `<span class='success'>${data.message}</span>`;
+                
+                // Mở khóa Bước 2 và truyền Mã NV xuống
+                document.getElementById('step2').classList.remove('disabled-form');
+                document.getElementById('maNV').value = maNV;
+                
+                // Khóa Bước 1 lại để tránh nhập đúp
+                document.getElementById('step1').classList.add('disabled-form');
+            } else {
+                msgBox.innerHTML = `<span class='error'>${data.message}</span>`;
+            }
+        } catch (error) {
+            msgBox.innerHTML = "<span class='error'>Lỗi kết nối máy chủ!</span>";
+        }
+    }
+
+    // Hàm xử lý Bước 2: Tạo tài khoản
+    async function submitCreateAccount() {
+        const maNV = document.getElementById('maNV').value;
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        const role = document.getElementById('role').value;
+        const msgBox = document.getElementById('msgStep2');
+
+        if(!username || !password) {
+            msgBox.innerHTML = "<span class='error'>Vui lòng nhập tên đăng nhập và mật khẩu!</span>";
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/create-account', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ maNV, username, password, role })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                msgBox.innerHTML = `<span class='success'>${data.message}</span>`;
+                setTimeout(() => {
+                    alert("Quá trình tiếp nhận nhân viên mới hoàn tất!");
+                    window.location.reload(); // Tải lại trang để nhập người tiếp theo
+                }, 1500);
+            } else {
+                msgBox.innerHTML = `<span class='error'>${data.message}</span>`;
+            }
+        } catch (error) {
+            msgBox.innerHTML = "<span class='error'>Lỗi kết nối máy chủ!</span>";
+        }
+    }
+</script>
+
+</body>
+</html>

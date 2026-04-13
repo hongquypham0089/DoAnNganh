@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống chấm công thông minh và quản lý nhân sự</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f8ff;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #e6f3ff 0%, #d1e9ff 100%);
+            padding: 20px 50px;
+            border-bottom: 3px solid #9b59b6;
+            box-shadow: 0 2px 10px rgba(155, 89, 182, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .greeting {
+            font-size: 24px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .greeting span {
+            color: #8e44ad;
+            font-weight: 600;
+            border-left: 3px solid #9b59b6;
+            padding-left: 15px;
+            margin-left: 10px;
+        }
+
+        .logout-btn {
+            background-color: #8e44ad;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .logout-btn:hover {
+            background-color: #9b59b6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(142, 68, 173, 0.3);
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #8e44ad;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 20px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: #e6f3ff;
+            color: #8e44ad;
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================
+        TÙY CHỈNH MENU CHO PC VÀ MOBILE
+        ========================================== */
+        
+        /* Mặc định trên PC/Tablet: Hiện CHỮ, Ẩn ICON */
+        .nav-icon {
+            display: none;
+        }
+        .nav-text {
+            display: inline;
+        }
+
+        /* Khi màn hình nhỏ hơn 768px (Điện thoại) */
+        @media (max-width: 768px) {
+            /* Hiện ICON, Ẩn CHỮ */
+            .nav-icon {
+                display: inline;
+                font-size: 22px;
+            }
+            .nav-text {
+                display: none;
+            }
+            
+            /* Tinh chỉnh lại thanh Menu cho điện thoại */
+            .nav-container {
+                gap: 5px;
+                justify-content: space-around;
+                padding: 0 10px;                
+            }
+            
+            .nav-item {
+                padding: 10px 15px;
+                border-radius: 50%;
+            }
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        /* Page Content */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Trang Chủ Styles */
+        .home-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #9b59b6;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2c3e50, #1e2b38);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #9b59b6;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #95a5a6;
+            margin-bottom: 15px;
+        }
+
+        .company-info {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .home-layout,
+            .income-stats,
+            .training-layout,
+            .profile-grid,
+            .stats-overview,
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                gap: 15px;
+                text-align: center;
+                
+            }
+
+            .info-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #9b59b6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="greeting">
+                Xin chào <span><%= user ? user.TenNhanVien : 'Bạn' %></span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span>🚪</span> Đăng xuất
+            </button>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="/trangchu" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Trang chủ</span>
+            </a>
+            <a href="/checkin" class="nav-item">
+                <span class="nav-icon">⏱️</span>
+                <span class="nav-text">Chấm công</span>
+            </a>
+            <a href="/ThuNhap" class="nav-item">
+                <span class="nav-icon">💰</span>
+                <span class="nav-text">Thu nhập</span>
+            </a>
+            <a href="/daotao" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span class="nav-text">Đào tạo</span>
+            </a>
+            <a href="/dieukhoan" class="nav-item">
+                <span class="nav-icon">📜</span>
+                <span class="nav-text">Điều khoản & CS</span>
+            </a>
+            <a href="/huongdansudung" class="nav-item">
+                <span class="nav-icon">❓</span>
+                <span class="nav-text">Hướng dẫn</span>
+            </a>
+            <a href="/user" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Thông tin cá nhân</span>
+            </a>
+        </div>
+    </nav>

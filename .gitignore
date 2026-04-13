@@ -1,0 +1,15 @@
+# Node
+node_modules/
+
+# Python
+.venv/
+__pycache__/
+
+# Env
+.env
+
+# Dataset / AI
+aligned-data/
+dataset/
+*.jpg
+*.png

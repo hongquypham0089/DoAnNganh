@@ -1,0 +1,328 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="css/ThuNhap.css">
+    <main class="main-container">
+        <!-- Page Title with Month Selector -->
+        <div class="page-title">
+            <div class="title-left">
+                <span>💰</span>
+                <h1>Xem thu nhập cá nhân</h1>
+            </div>
+            <div class="month-selector">
+                <button class="month-nav" onclick="changeMonth(-1)">←</button>
+                <span class="current-month" id="currentMonth">Tháng 3, 2026</span>
+                <button class="month-nav" onclick="changeMonth(1)">→</button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">💰</div>
+                </div>
+                <div class="stat-value">12.500.000 ₫</div>
+                <div class="stat-label">Tổng thu nhập</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">⏰</div>
+                </div>
+                <div class="stat-value">176 giờ</div>
+                <div class="stat-label">Tổng giờ công</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">📊</div>
+                </div>
+                <div class="stat-value">22/26 ngày</div>
+                <div class="stat-label">Ngày công thực tế</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">💳</div>
+                </div>
+                <div class="stat-value">10.500.000 ₫</div>
+                <div class="stat-label">Thực nhận</div>
+
+            </div>
+        </div>
+
+        <div class="salary-breakdown attendance-stats-card">
+            <div class="section-header">
+                <h2>
+                    <span>📊</span> Thống kê chuyên cần tháng <span id="statMonthTitle">3/2026</span>
+                </h2>
+            </div>
+ 
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-card" style="border-left: 5px solid #3498db;">
+                    <div class="stat-header">
+                        <div class="stat-icon">📅</div>
+                    </div>
+                    <div class="stat-value" id="statTotalDays">0</div>
+                    <div class="stat-label" style="font-weight: bold;">Tổng ngày đi làm</div>
+                </div>
+
+                <div class="stat-card" style="border-left: 5px solid #2ecc71;">
+                    <div class="stat-header">
+                        <div class="stat-icon">✅</div>
+                    </div>
+                    <div class="stat-value" id="statOnTime" style="color: #27ae60;">0</div>
+                    <div class="stat-label">Số ngày đúng giờ</div>
+                </div>
+
+                <div class="stat-card" style="border-left: 5px solid #e74c3c;">
+                    <div class="stat-header">
+                        <div class="stat-icon">⚠️</div>
+                    </div>
+                    <div class="stat-value" id="statLate" style="color: #c0392b;">0</div>
+                    <div class="stat-label">Số ngày đi trễ</div>
+                </div>
+
+                <div class="stat-card" style="border-left: 5px solid #f39c12;">
+                    <div class="stat-header">
+                        <div class="stat-icon">⏳</div>
+                    </div>
+                    <div class="stat-value" id="statOvertime" style="color: #d35400;">0</div>
+                    <div class="stat-label">Số ngày tăng ca</div>
+                </div>
+            </div>
+            
+            <div class="breakdown-note" style="margin-top: 15px; color: #7f8c8d; font-style: italic;">
+                * Dữ liệu được tổng hợp tự động từ lịch sử chấm công AI
+            </div>
+        </div>
+
+        <!-- Attendance Stats -->
+        <div class="attendance-stats">
+            <div class="chart-card">
+                <h3>
+                    <span>📊</span> Giờ công theo ngày
+                </h3>
+                <div class="chart-container">
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="height: 160px"></div>
+                        <span class="chart-label">T2</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="height: 180px"></div>
+                        <span class="chart-label">T3</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="height: 170px"></div>
+                        <span class="chart-label">T4</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="height: 190px"></div>
+                        <span class="chart-label">T5</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="height: 175px"></div>
+                        <span class="chart-label">T6</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="height: 100px"></div>
+                        <span class="chart-label">T7</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="height: 80px"></div>
+                        <span class="chart-label">CN</span>
+                    </div>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #8e44ad"></div>
+                        <span>Giờ làm</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e74c3c"></div>
+                        <span>Giờ chuẩn: 8h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-summary">
+                <h3>
+                    <span>📈</span> Thống kê chấm công
+                </h3>
+                <div class="summary-circle">
+                    <div class="circle-progress"></div>
+                </div>
+                <div class="circle-stats">
+                    <div class="stat-row">
+                        <span class="stat-name">Đi làm đúng giờ</span>
+                        <span class="stat-number good">18 ngày</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-name">Đi trễ</span>
+                        <span class="stat-number warning">2 ngày</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-name">Nghỉ phép</span>
+                        <span class="stat-number">2 ngày</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-name">Tăng ca</span>
+                        <span class="stat-number good">25 giờ</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-name">Tỷ lệ chuyên cần</span>
+                        <span class="stat-number good">92%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salary History
+        <div class="salary-history">
+            <div class="section-header">
+                <h2>
+                    <span>📅</span> Lịch sử thu nhập
+                </h2>
+                <div class="history-tabs">
+                    <span class="history-tab active">6 tháng</span>
+                    <span class="history-tab">12 tháng</span>
+                    <span class="history-tab">Tất cả</span>
+                </div>
+            </div>
+
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Tháng</th>
+                        <th>Lương cơ bản</th>
+                        <th>Phụ cấp</th>
+                        <th>Thưởng</th>
+                        <th>Tăng ca</th>
+                        <th>Tạm ứng</th>
+                        <th class="text-right">Thực nhận</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tháng 3/2026</td>
+                        <td>8.000.000</td>
+                        <td>1.500.000</td>
+                        <td>1.500.000</td>
+                        <td>2.500.000</td>
+                        <td>2.000.000</td>
+                        <td class="text-right"><strong>10.500.000</strong></td>
+                        <td><span class="badge badge-success">Đã thanh toán</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tháng 2/2026</td>
+                        <td>8.000.000</td>
+                        <td>1.500.000</td>
+                        <td>1.000.000</td>
+                        <td>2.000.000</td>
+                        <td>1.000.000</td>
+                        <td class="text-right"><strong>11.500.000</strong></td>
+                        <td><span class="badge badge-success">Đã thanh toán</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tháng 1/2026</td>
+                        <td>8.000.000</td>
+                        <td>1.500.000</td>
+                        <td>2.000.000</td>
+                        <td>1.500.000</td>
+                        <td>0</td>
+                        <td class="text-right"><strong>13.000.000</strong></td>
+                        <td><span class="badge badge-success">Đã thanh toán</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tháng 12/2025</td>
+                        <td>7.500.000</td>
+                        <td>1.500.000</td>
+                        <td>3.000.000</td>
+                        <td>1.000.000</td>
+                        <td>2.000.000</td>
+                        <td class="text-right"><strong>11.000.000</strong></td>
+                        <td><span class="badge badge-success">Đã thanh toán</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tháng 11/2025</td>
+                        <td>7.500.000</td>
+                        <td>1.500.000</td>
+                        <td>500.000</td>
+                        <td>1.000.000</td>
+                        <td>1.000.000</td>
+                        <td class="text-right"><strong>9.500.000</strong></td>
+                        <td><span class="badge badge-success">Đã thanh toán</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tháng 10/2025</td>
+                        <td>7.500.000</td>
+                        <td>1.500.000</td>
+                        <td>500.000</td>
+                        <td>500.000</td>
+                        <td>0</td>
+                        <td class="text-right"><strong>10.000.000</strong></td>
+                        <td><span class="badge badge-success">Đã thanh toán</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -->
+
+        <!-- Payment Information -->
+        <div class="payment-info">
+            <div class="bank-card">
+                <h3>
+                    <span>💳</span> Thông tin nhận lương
+                </h3>
+                <div class="bank-details">
+                    <div class="bank-name">Ngân hàng Vietcombank</div>
+                    <div class="bank-account">1018 3456 789</div>
+                    <div class="bank-holder">PHẠM HỒNG QUÝ</div>
+                </div>
+                <div class="tax-info">
+                    <div class="tax-row">
+                        <span>Mã số thuế:</span>
+                        <span>123456789-01</span>
+                    </div>
+                    <div class="tax-row">
+                        <span>Chi nhánh:</span>
+                        <span>VCB - CN TP.HCM</span>
+                    </div>
+                    <div class="tax-row">
+                        <span>Ngày trả lương:</span>
+                        <span>Ngày 05 hàng tháng</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payslip-card">
+                <h3>
+                    <span>📄</span> Bảng lương chi tiết
+                </h3>
+                <div class="payslip-list">
+                    <div class="payslip-item" onclick="downloadPayslip('3-2026')">
+                        <span class="payslip-month">Tháng 3/2026</span>
+                        <span class="payslip-amount">10.500.000 ₫</span>
+                        <span class="payslip-icon">📥</span>
+                    </div>
+                    <div class="payslip-item" onclick="downloadPayslip('2-2026')">
+                        <span class="payslip-month">Tháng 2/2026</span>
+                        <span class="payslip-amount">11.500.000 ₫</span>
+                        <span class="payslip-icon">📥</span>
+                    </div>
+                    <div class="payslip-item" onclick="downloadPayslip('1-2026')">
+                        <span class="payslip-month">Tháng 1/2026</span>
+                        <span class="payslip-amount">13.000.000 ₫</span>
+                        <span class="payslip-icon">📥</span>
+                    </div>
+                    <div class="payslip-item" onclick="downloadPayslip('12-2025')">
+                        <span class="payslip-month">Tháng 12/2025</span>
+                        <span class="payslip-amount">11.000.000 ₫</span>
+                        <span class="payslip-icon">📥</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/ThuNhap.js"></script>
+<%- include('partials/footer') %>
